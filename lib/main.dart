@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/auth/authscreen.dart';
 import 'package:todo_app/screens/home.dart';
 
 void main() {
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthScreen(),
+      home: Home(),
     );
   }
 }
