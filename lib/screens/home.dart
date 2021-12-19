@@ -10,12 +10,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var tasks = [];
+  TextEditingController task = TextEditingController();
+  TextEditingController desc = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("TODO"),
+        centerTitle: true,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -26,31 +28,52 @@ class _HomeState extends State<Home> {
           Icons.add,
           color: Colors.white,
         ),
-        backgroundColor: Colors.blue,
         onPressed: () {
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => addtask()));
           showModalBottomSheet<void>(
-            // context and builder are
-            // required properties in this widget
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              // we set up a container inside which
-              // we create center column and display text
               return FractionallySizedBox(
-                heightFactor: 0.9,
+                heightFactor: 0.85,
                 child: Container(
-                  padding:EdgeInsets.only(top:10,right: 30,left:30),
+                  padding: EdgeInsets.only(top: 10, right: 10, left: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: Text('Add New Task',style: TextStyle(
-  	                    fontWeight: FontWeight.bold, fontSize: 28, color: Colors.blue),),
-                      ),SizedBox(height: 30,),
+                    children: [
+                      Stack(children: [
+                        Container(
+                          width: double.infinity,
+                          height: 50.0,
+                          child: Center(
+                              child: Text(
+                            "New Task",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red),
+                          ) // Your desired title
+                              ),
+                        ),
+                        Container(
+                            margin: EdgeInsets.all(0),
+                            child: IconButton(
+                                icon: Icon(Icons.arrow_back),
+                                color: Colors.red, // Your desired icon
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                }))
+                      ]),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Container(
                         child: TextField(
+                          controller: task,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Enter Task'),
@@ -61,6 +84,7 @@ class _HomeState extends State<Home> {
                       ),
                       Container(
                         child: TextField(
+                          controller: desc,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Enter Description'),
@@ -70,11 +94,12 @@ class _HomeState extends State<Home> {
                         height: 20,
                       ),
                       Container(
-                        width: double.infinity,
+                        width: 100,
+                        height: 45,
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text(
-                            'Add Task',
+                            'Add',
                             style: GoogleFonts.roboto(fontSize: 18),
                           ),
                         ),
