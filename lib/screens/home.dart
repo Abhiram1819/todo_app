@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/screens/add_task.dart';
+import 'package:todo_app/screens/reg_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,6 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
   TextEditingController task = TextEditingController();
   TextEditingController desc = TextEditingController();
   @override
@@ -18,6 +22,16 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("TODO"),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((onValue) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => registration()));
+                });
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
