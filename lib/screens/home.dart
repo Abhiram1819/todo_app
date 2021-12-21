@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
-  TextEditingController task = TextEditingController();
-  TextEditingController desc = TextEditingController();
+  TextEditingController _titleEditingController = TextEditingController();
+  TextEditingController _descEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,14 +70,13 @@ class _HomeState extends State<Home> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red),
-                          ) // Your desired title
-                              ),
+                          )),
                         ),
                         Container(
                             margin: EdgeInsets.all(0),
                             child: IconButton(
                                 icon: Icon(Icons.arrow_back),
-                                color: Colors.red, // Your desired icon
+                                color: Colors.red,
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 }))
@@ -87,7 +86,7 @@ class _HomeState extends State<Home> {
                       ),
                       Container(
                         child: TextField(
-                          controller: task,
+                          controller: _titleEditingController,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Enter Task'),
@@ -98,7 +97,9 @@ class _HomeState extends State<Home> {
                       ),
                       Container(
                         child: TextField(
-                          controller: desc,
+                          controller: _descEditingController,
+                          minLines: 1,
+                          maxLines: 10,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Enter Description'),
@@ -128,4 +129,5 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
 }
