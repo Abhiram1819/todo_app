@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/screens/reg_screen.dart';
+import 'package:todo_app/auth/reg_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatefulWidget {
@@ -31,12 +31,13 @@ class _HomeState extends State<Home> {
   }
 
   deleteTodo(item) {
-
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("Tasks").doc(item);
 
-        documentReference.delete().whenComplete(() => print("Task added successfully"));
-        // SnackBar(content: Text("Task Deleted"),)
+    documentReference
+        .delete()
+        .whenComplete(() => print("Task added successfully"));
+    // SnackBar(content: Text("Task Deleted"),)
   }
 
   @override
@@ -74,18 +75,24 @@ class _HomeState extends State<Home> {
                         color: Colors.red[100],
                         elevation: 4,
                         child: ListTile(
-                          title: Text((documentSnapshot != null) ? (documentSnapshot["todotitle"]) : ""),
-                          subtitle: Text((documentSnapshot != null) ? (documentSnapshot["tododesc"]) : ""),
+                          title: Text((documentSnapshot != null)
+                              ? (documentSnapshot["todotitle"])
+                              : ""),
+                          subtitle: Text((documentSnapshot != null)
+                              ? (documentSnapshot["tododesc"])
+                              : ""),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),
                             color: Colors.red,
                             onPressed: () {
                               Fluttertoast.showToast(
-              msg: "Task Deleted Successfully",
-              backgroundColor: Colors.grey,
-              );
+                                msg: "Task Deleted Successfully",
+                                backgroundColor: Colors.grey,
+                              );
                               setState(() {
-                                deleteTodo((documentSnapshot != null) ? (documentSnapshot["todotitle"]) : "");
+                                deleteTodo((documentSnapshot != null)
+                                    ? (documentSnapshot["todotitle"])
+                                    : "");
                               });
                             },
                           ),
@@ -167,7 +174,7 @@ class _HomeState extends State<Home> {
                         child: TextField(
                           // controller: _descEditingController,
                           onChanged: (String value) {
-                            description=value;
+                            description = value;
                           },
                           minLines: 1,
                           maxLines: 10,
@@ -188,6 +195,10 @@ class _HomeState extends State<Home> {
                               createtask();
                             });
                             Navigator.of(context).pop();
+                            Fluttertoast.showToast(
+                                msg: "Task Added Successfully",
+                                backgroundColor: Colors.grey,
+                              );
                           },
                           child: Text(
                             'Add',

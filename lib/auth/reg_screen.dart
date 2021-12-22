@@ -5,16 +5,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo_app/screens/home.dart';
-import 'package:todo_app/screens/reg_screen.dart';
+import 'package:todo_app/auth/login_screen.dart';
 
-class loginscreen extends StatefulWidget {
-  const loginscreen({Key? key}) : super(key: key);
+class registration extends StatefulWidget {
+  const registration({Key? key}) : super(key: key);
 
   @override
-  _loginscreenState createState() => _loginscreenState();
+  _registrationState createState() => _registrationState();
 }
 
-class _loginscreenState extends State<loginscreen> {
+class _registrationState extends State<registration> {
   var _email, _password;
   var _formkey = GlobalKey<FormState>();
 
@@ -23,7 +23,7 @@ class _loginscreenState extends State<loginscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Signin'),
+        title: Text('Signup'),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -77,28 +77,20 @@ class _loginscreenState extends State<loginscreen> {
                       width: double.infinity,
                       child: RaisedButton(
                         onPressed: () {
-                          login();
+                          signup();
                         },
                         child: Text(
-                          "Login",
+                          "Register",
                           style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.red,
                       ),
                     ),
-                    Container(
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => registration()));
-                            },
-                            child: Text(
-                              "Register here",
-                              style: TextStyle(color: Colors.red),
-                            )),
-                        alignment: Alignment.centerRight)
+                    Container(child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => loginscreen()));
+                      },
+                    child: Text("Login here", style: TextStyle(color: Colors.red),)), alignment: Alignment.centerRight)
                   ],
                 ),
               ),
@@ -106,18 +98,18 @@ class _loginscreenState extends State<loginscreen> {
     );
   }
 
-  void login() {
+  void signup() {
     if (_formkey.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
       FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password)
+          .createUserWithEmailAndPassword(email: _email, password: _password)
           .then((user) {
         setState(() {
           isLoading = false;
         });
-        Fluttertoast.showToast(msg: "Login Success");
+        Fluttertoast.showToast(msg: "Registration Success");
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (_) => Home()),
@@ -126,7 +118,7 @@ class _loginscreenState extends State<loginscreen> {
         setState(() {
           isLoading = false;
         });
-        Fluttertoast.showToast(msg: "error" + onError.toString());
+        Fluttertoast.showToast(msg: "error"+onError.toString());
       });
     }
   }
