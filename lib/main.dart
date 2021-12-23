@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/auth/login_screen.dart';
 import 'package:todo_app/screens/home.dart';
-import 'package:todo_app/auth/reg_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.red),
-      home: Home(),
+      home: FirebaseAuth.instance.currentUser == null ? loginscreen() : Home(),
     );
   }
 }

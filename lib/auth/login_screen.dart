@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo_app/screens/home.dart';
@@ -45,7 +42,7 @@ class _loginscreenState extends State<loginscreen> {
                         });
                       },
                       decoration: InputDecoration(
-                          hintText: "Enter Email",
+                          hintText: "Enter valid Email",
                           labelText: "Email",
                           border: OutlineInputBorder()),
                     ),
@@ -56,9 +53,7 @@ class _loginscreenState extends State<loginscreen> {
                       obscureText: true,
                       keyboardType: TextInputType.emailAddress,
                       validator: (item) {
-                        return item!.length > 6
-                            ? null
-                            : "Password must be atleast characters";
+                        return item!.length > 6 ? null : "Enter valid Password";
                       },
                       onChanged: (item) {
                         setState(() {

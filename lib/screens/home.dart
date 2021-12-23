@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/auth/reg_screen.dart';
+import 'package:todo_app/auth/login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatefulWidget {
@@ -13,8 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // TextEditingController _titleEditingController = TextEditingController();
-  // TextEditingController _descEditingController = TextEditingController();
   String title = " ";
   String description = " ";
 
@@ -25,19 +23,16 @@ class _HomeState extends State<Home> {
       "todotitle": title,
       "tododesc": description
     };
-    documentReference
-        .set(todolist)
-        .whenComplete(() => print("Task added successfully"));
+    documentReference.set(todolist);
+    // .whenComplete(() => print("Task added successfully"));
   }
 
   deleteTodo(item) {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("Tasks").doc(item);
 
-    documentReference
-        .delete()
-        .whenComplete(() => print("Task added successfully"));
-    // SnackBar(content: Text("Task Deleted"),)
+    documentReference.delete();
+    // .whenComplete(() => print("Task added successfully"));
   }
 
   @override
@@ -50,8 +45,8 @@ class _HomeState extends State<Home> {
           IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((onValue) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => registration()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => loginscreen()));
                 });
               },
               icon: Icon(Icons.logout))
@@ -196,9 +191,9 @@ class _HomeState extends State<Home> {
                             });
                             Navigator.of(context).pop();
                             Fluttertoast.showToast(
-                                msg: "Task Added Successfully",
-                                backgroundColor: Colors.grey,
-                              );
+                              msg: "Task Added Successfully",
+                              backgroundColor: Colors.grey,
+                            );
                           },
                           child: Text(
                             'Add',

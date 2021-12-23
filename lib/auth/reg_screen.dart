@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo_app/screens/home.dart';
@@ -58,7 +55,7 @@ class _registrationState extends State<registration> {
                       validator: (item) {
                         return item!.length > 6
                             ? null
-                            : "Password must be atleast characters";
+                            : "Password must be atleast 6 characters";
                       },
                       onChanged: (item) {
                         setState(() {
@@ -86,11 +83,19 @@ class _registrationState extends State<registration> {
                         color: Colors.red,
                       ),
                     ),
-                    Container(child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => loginscreen()));
-                      },
-                    child: Text("Login here", style: TextStyle(color: Colors.red),)), alignment: Alignment.centerRight)
+                    Container(
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => loginscreen()));
+                            },
+                            child: Text(
+                              "Login here",
+                              style: TextStyle(color: Colors.red),
+                            )),
+                        alignment: Alignment.centerRight)
                   ],
                 ),
               ),
@@ -118,7 +123,7 @@ class _registrationState extends State<registration> {
         setState(() {
           isLoading = false;
         });
-        Fluttertoast.showToast(msg: "error"+onError.toString());
+        Fluttertoast.showToast(msg: "error" + onError.toString());
       });
     }
   }
