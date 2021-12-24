@@ -16,7 +16,11 @@ class _resetpasswordState extends State<resetpassword> {
     return Scaffold(
       appBar: AppBar(title: Text("Reset Password")),
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        margin: EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               onChanged: (item) {
@@ -29,11 +33,14 @@ class _resetpasswordState extends State<resetpassword> {
                   labelText: "Email",
                   border: OutlineInputBorder()),
             ),
-            TextButton(
+            SizedBox(height:20),
+            RaisedButton(
                 onPressed: () {
                   resetpassword();
                 },
-                child: Text("Reset Password"))
+                child: Text("Reset Password",style: TextStyle(color: Colors.white),),
+                color: Colors.red
+                )
           ],
         ),
       ),

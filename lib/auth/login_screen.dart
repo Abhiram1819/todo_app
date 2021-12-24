@@ -96,15 +96,15 @@ class _loginscreenState extends State<loginscreen> {
                             )),
                         alignment: Alignment.centerRight),
                     Container(
-                        child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => resetpassword()));
-                            },
-                            child: Text("Forgot Password?")),
-                        alignment: Alignment.bottomCenter)
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => resetpassword()));
+                          },
+                          child: Text("Forgot Password?")),
+                    )
                   ],
                 ),
               ),
