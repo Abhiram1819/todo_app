@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:todo_app/auth/reset_password.dart';
 import 'package:todo_app/screens/home.dart';
 import 'package:todo_app/auth/reg_screen.dart';
 
@@ -93,7 +94,17 @@ class _loginscreenState extends State<loginscreen> {
                               "Register here",
                               style: TextStyle(color: Colors.red),
                             )),
-                        alignment: Alignment.centerRight)
+                        alignment: Alignment.centerRight),
+                    Container(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => resetpassword()));
+                            },
+                            child: Text("Forgot Password?")),
+                        alignment: Alignment.bottomCenter)
                   ],
                 ),
               ),
