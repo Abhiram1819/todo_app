@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:todo_app/auth/reset_password.dart';
 import 'package:todo_app/screens/home.dart';
 import 'package:todo_app/auth/reg_screen.dart';
@@ -15,6 +16,12 @@ class loginscreen extends StatefulWidget {
 class _loginscreenState extends State<loginscreen> {
   var _email, _password;
   var _formkey = GlobalKey<FormState>();
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 
   bool isLoading = false;
   @override
@@ -104,6 +111,14 @@ class _loginscreenState extends State<loginscreen> {
                                     builder: (_) => resetpassword()));
                           },
                           child: Text("Forgot Password?")),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          googlesignin();
+                        },
+                        child: Text("Continue with Google"),
+                      ),
                     )
                   ],
                 ),
@@ -135,5 +150,32 @@ class _loginscreenState extends State<loginscreen> {
         Fluttertoast.showToast(msg: "error" + onError.toString());
       });
     }
+  }
+
+  Future<void> googlesignin() async {
+    try {
+      GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        setState(() {
+          isLoading = true;
+        });
+        GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        AuthCredential credential = GoogleAuthProvider.credential(
+            idToken: googleSignInAuthentication.idToken,
+            accessToken: googleSignInAuthentication.accessToken);
+        try {
+          UserCredential userCredential =
+              await FirebaseAuth.instance.signInWithCredential(credential);
+          Navigator.push(context, MaterialPageRoute(builder: (_) => Home()));
+        } catch (e) {
+          setState(() {
+            isLoading = false;
+          });
+          print("error");
+        }
+      } else {}
+    } catch (e) {}
   }
 }
