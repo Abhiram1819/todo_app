@@ -166,9 +166,12 @@ class _loginscreenState extends State<loginscreen> {
             idToken: googleSignInAuthentication.idToken,
             accessToken: googleSignInAuthentication.accessToken);
         try {
+          setState(() {
+          isLoading = true;
+        });
           UserCredential userCredential =
               await FirebaseAuth.instance.signInWithCredential(credential);
-          Navigator.push(context, MaterialPageRoute(builder: (_) => Home()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Home()));
         } catch (e) {
           setState(() {
             isLoading = false;
